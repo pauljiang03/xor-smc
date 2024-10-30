@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libxor_smc.a CMakeFiles/xor_smc.dir/src/Solver.cpp.o CMakeFiles/xor_smc.dir/src/Formula.cpp.o CMakeFiles/xor_smc.dir/src/CDCLSolver.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libxor_smc.a
