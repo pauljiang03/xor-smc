@@ -29,5 +29,5 @@ target_include_directories(xor_smc
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# Add examples directory
+# Add examples
 add_subdirectory(examples)
