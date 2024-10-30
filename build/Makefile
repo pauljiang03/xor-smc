@@ -142,6 +142,19 @@ simple_example/fast:
 	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/build
 .PHONY : simple_example/fast
 
+#=============================================================================
+# Target rules for targets named complex_test
+
+# Build rule for target.
+complex_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 complex_test
+.PHONY : complex_test
+
+# fast build rule for target.
+complex_test/fast:
+	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/build
+.PHONY : complex_test/fast
+
 src/CDCLSolver.o: src/CDCLSolver.cpp.o
 .PHONY : src/CDCLSolver.o
 
@@ -222,6 +235,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... complex_test"
 	@echo "... simple_example"
 	@echo "... xor_smc"
 	@echo "... src/CDCLSolver.o"

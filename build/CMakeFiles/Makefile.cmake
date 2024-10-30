@@ -108,4 +108,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/xor_smc.dir/DependInfo.cmake"
   "examples/CMakeFiles/simple_example.dir/DependInfo.cmake"
+  "examples/CMakeFiles/complex_test.dir/DependInfo.cmake"
   )

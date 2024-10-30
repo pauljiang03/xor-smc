@@ -130,6 +130,44 @@ simple_example/fast:
 	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/build
 .PHONY : simple_example/fast
 
+# Convenience name for target.
+examples/CMakeFiles/complex_test.dir/rule:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/complex_test.dir/rule
+.PHONY : examples/CMakeFiles/complex_test.dir/rule
+
+# Convenience name for target.
+complex_test: examples/CMakeFiles/complex_test.dir/rule
+.PHONY : complex_test
+
+# fast build rule for target.
+complex_test/fast:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/build
+.PHONY : complex_test/fast
+
+complex_test.o: complex_test.cpp.o
+.PHONY : complex_test.o
+
+# target to build an object file
+complex_test.cpp.o:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/complex_test.cpp.o
+.PHONY : complex_test.cpp.o
+
+complex_test.i: complex_test.cpp.i
+.PHONY : complex_test.i
+
+# target to preprocess a source file
+complex_test.cpp.i:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/complex_test.cpp.i
+.PHONY : complex_test.cpp.i
+
+complex_test.s: complex_test.cpp.s
+.PHONY : complex_test.s
+
+# target to generate assembly for a file
+complex_test.cpp.s:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/complex_test.cpp.s
+.PHONY : complex_test.cpp.s
+
 simple_example.o: simple_example.cpp.o
 .PHONY : simple_example.o
 
@@ -162,7 +200,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... complex_test"
 	@echo "... simple_example"
+	@echo "... complex_test.o"
+	@echo "... complex_test.i"
+	@echo "... complex_test.s"
 	@echo "... simple_example.o"
 	@echo "... simple_example.i"
 	@echo "... simple_example.s"
