@@ -1,48 +1,39 @@
 #pragma once
 #include "CDCLSolver.hpp"
-#include "Formula.hpp"  // Added this include
 #include <vector>
 #include <random>
-#include <functional>
 
 namespace xor_smc {
 
 class Solver {
 public:
-    // Constructor with error probability bound
     explicit Solver(double eta = 0.01);
     
-    // Main solving interface
-    bool solve(const Formula& phi,
-              const std::vector<Formula>& f,
+    // Main SMC interface
+    bool solve(const std::vector<std::vector<Literal>>& phi,
+              const std::vector<std::vector<std::vector<Literal>>>& f,
               const std::vector<uint32_t>& q,
               uint32_t n_vars);
-
+              
 private:
-    // Helper methods
+    // XOR constraint handling
+    std::vector<std::vector<Literal>> generate_xor_constraints(
+        const std::vector<std::vector<Literal>>& formula,
+        uint32_t num_vars,
+        uint32_t num_xors);
+        
     bool solve_with_xor(CDCLSolver& solver,
-                       const Formula& formula,
+                       const std::vector<std::vector<Literal>>& formula,
                        uint32_t num_vars,
-                       uint32_t num_constraints);
+                       uint32_t num_xors);
                        
-    void add_xor_constraint(CDCLSolver& solver,
-                          const std::vector<uint32_t>& variables);
-                          
+    // Helper methods
     uint32_t compute_T(uint32_t n, uint32_t k) const;
-
-    // Count number of 1 bits in a number
-    static size_t count_ones(size_t x) {
-        size_t count = 0;
-        while (x) {
-            count += x & 1;
-            x >>= 1;
-        }
-        return count;
-    }
-
-    // Member variables
-    double eta_;           // Error probability bound
-    std::mt19937 rng_;    // Random number generator
+    
+    // Member variables - order matters for initialization
+    std::mt19937 rng_;      // Random number generator
+    double eta_;            // Error probability bound
+    bool debug_;            // Debug output control
 };
 
 }

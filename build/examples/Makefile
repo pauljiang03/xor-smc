@@ -144,6 +144,20 @@ complex_test/fast:
 	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/build
 .PHONY : complex_test/fast
 
+# Convenience name for target.
+examples/CMakeFiles/smc_test.dir/rule:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/smc_test.dir/rule
+.PHONY : examples/CMakeFiles/smc_test.dir/rule
+
+# Convenience name for target.
+smc_test: examples/CMakeFiles/smc_test.dir/rule
+.PHONY : smc_test
+
+# fast build rule for target.
+smc_test/fast:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/build
+.PHONY : smc_test/fast
+
 complex_test.o: complex_test.cpp.o
 .PHONY : complex_test.o
 
@@ -192,6 +206,30 @@ simple_example.cpp.s:
 	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/simple_example.cpp.s
 .PHONY : simple_example.cpp.s
 
+smc_test.o: smc_test.cpp.o
+.PHONY : smc_test.o
+
+# target to build an object file
+smc_test.cpp.o:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.o
+.PHONY : smc_test.cpp.o
+
+smc_test.i: smc_test.cpp.i
+.PHONY : smc_test.i
+
+# target to preprocess a source file
+smc_test.cpp.i:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.i
+.PHONY : smc_test.cpp.i
+
+smc_test.s: smc_test.cpp.s
+.PHONY : smc_test.s
+
+# target to generate assembly for a file
+smc_test.cpp.s:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.s
+.PHONY : smc_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -202,12 +240,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... complex_test"
 	@echo "... simple_example"
+	@echo "... smc_test"
 	@echo "... complex_test.o"
 	@echo "... complex_test.i"
 	@echo "... complex_test.s"
 	@echo "... simple_example.o"
 	@echo "... simple_example.i"
 	@echo "... simple_example.s"
+	@echo "... smc_test.o"
+	@echo "... smc_test.i"
+	@echo "... smc_test.s"
 .PHONY : help
 
 
