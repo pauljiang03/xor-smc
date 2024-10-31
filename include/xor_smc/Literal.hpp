@@ -12,7 +12,7 @@ public:
     bool is_positive() const { return data_ & 1; }
     
 private:
-    uint32_t data_;  // Variable ID in upper bits, sign in lowest bit
+    uint32_t data_;  
 };
 
 }

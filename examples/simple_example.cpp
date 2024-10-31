@@ -2,7 +2,7 @@
 #include <vector>
 #include <cassert>
 #include <chrono>
-#include "xor_smc/CDCLSolver.hpp"
+#include "xor_smc/Solver.hpp"
 #include "xor_smc/Literal.hpp"
 
 using namespace xor_smc;
@@ -16,7 +16,7 @@ void print_test_result(const std::string& test_name, bool success) {
 // Test 1: Unit clause handling
 void test_unit_clause() {
     std::cout << "\nTesting unit clause handling...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(3);
     
     // Add single unit clause
@@ -36,7 +36,7 @@ void test_unit_clause() {
 // Test 2: Binary clause propagation
 void test_binary_propagation() {
     std::cout << "\nTesting binary clause propagation...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(3);
     
     solver.add_clause({Literal(0, true)});  // x0
@@ -53,7 +53,7 @@ void test_binary_propagation() {
 // Test 3: Simple conflict and backtracking
 void test_conflict_and_backtrack() {
     std::cout << "\nTesting conflict and backtracking...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(3);
     
     // Create a simple conflict
@@ -70,7 +70,7 @@ void test_conflict_and_backtrack() {
 // Test 4: Clause learning effectiveness
 void test_clause_learning() {
     std::cout << "\nTesting clause learning effectiveness...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(4);
     
     // Create a situation where learning is beneficial
@@ -88,7 +88,7 @@ void test_clause_learning() {
 // Test 5: Pure SAT case
 void test_pure_sat() {
     std::cout << "\nTesting pure SAT case...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(3);
     
     // Simple satisfiable formula
@@ -106,7 +106,7 @@ void test_pure_sat() {
 // Test 6: Pure UNSAT case
 void test_pure_unsat() {
     std::cout << "\nTesting pure UNSAT case...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(2);
     
     // Simple unsatisfiable formula
@@ -123,7 +123,7 @@ void test_pure_unsat() {
 // Test 7: Small pigeonhole principle (PHP)
 void test_small_php() {
     std::cout << "\nTesting small pigeonhole principle...\n";
-    CDCLSolver solver;
+    Solver solver;
     
     const int holes = 2;
     const int pigeons = 3;
@@ -158,7 +158,7 @@ void test_small_php() {
 // Test 8: Long chain of implications
 void test_implication_chain() {
     std::cout << "\nTesting long implication chain...\n";
-    CDCLSolver solver;
+    Solver solver;
     
     const int n = 10;
     solver.set_num_variables(n);
@@ -183,7 +183,7 @@ void test_implication_chain() {
 // Test 9: Non-chronological backtracking
 void test_non_chrono_backtrack() {
     std::cout << "\nTesting non-chronological backtracking...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(5);
     
     // Create a situation requiring non-chronological backtracking
@@ -202,7 +202,7 @@ void test_non_chrono_backtrack() {
 // Test 10: Random 3-SAT near phase transition
 void test_random_3sat() {
     std::cout << "\nTesting random 3-SAT...\n";
-    CDCLSolver solver;
+    Solver solver;
     
     const int n = 20;  // variables
     const int m = 85;  // clauses (around 4.25 * n for phase transition)

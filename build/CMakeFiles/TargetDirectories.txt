@@ -1,8 +1,0 @@
-/Users/paul/documents/xor-smc/build/CMakeFiles/xor_smc.dir
-/Users/paul/documents/xor-smc/build/CMakeFiles/edit_cache.dir
-/Users/paul/documents/xor-smc/build/CMakeFiles/rebuild_cache.dir
-/Users/paul/documents/xor-smc/build/examples/CMakeFiles/simple_example.dir
-/Users/paul/documents/xor-smc/build/examples/CMakeFiles/complex_test.dir
-/Users/paul/documents/xor-smc/build/examples/CMakeFiles/more_tests.dir
-/Users/paul/documents/xor-smc/build/examples/CMakeFiles/edit_cache.dir
-/Users/paul/documents/xor-smc/build/examples/CMakeFiles/rebuild_cache.dir

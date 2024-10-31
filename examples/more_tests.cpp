@@ -2,7 +2,7 @@
 #include <vector>
 #include <cassert>
 #include <chrono>
-#include "xor_smc/CDCLSolver.hpp"
+#include "xor_smc/Solver.hpp"
 #include "xor_smc/Literal.hpp"
 
 using namespace xor_smc;
@@ -16,7 +16,7 @@ void print_result(const std::string& test_name, bool success) {
 // Creates XOR relationships but with additional constraints
 void test_xor_chain_with_twist() {
     std::cout << "\nRunning XOR Chain with Twist test...\n";
-    CDCLSolver solver;
+    Solver solver;
     const int n = 5;
     solver.set_num_variables(n);
     
@@ -41,7 +41,7 @@ void test_xor_chain_with_twist() {
 // Creates a cycle of implications with escape clauses
 void test_circular_dependencies() {
     std::cout << "\nRunning Circular Dependencies test...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(4);
     
     // Create circle: x0 => x1 => x2 => x3 => x0
@@ -63,7 +63,7 @@ void test_circular_dependencies() {
 // Like pigeonhole but with one escape clause
 void test_almost_pigeonhole() {
     std::cout << "\nRunning Almost-Pigeonhole test...\n";
-    CDCLSolver solver;
+    Solver solver;
     const int holes = 3;
     const int pigeons = 4;
     solver.set_num_variables(pigeons * holes);
@@ -101,7 +101,7 @@ void test_almost_pigeonhole() {
 // Test 4: Cascading Unit Propagation
 void test_cascading_propagation() {
     std::cout << "\nRunning Cascading Propagation test...\n";
-    CDCLSolver solver;
+    Solver solver;
     const int n = 8;
     solver.set_num_variables(n);
     
@@ -126,7 +126,7 @@ void test_cascading_propagation() {
 // Creates a diamond-shaped dependency graph
 void test_diamond_structure() {
     std::cout << "\nRunning Diamond Structure test...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(4);
     
     // x0 => x1 and x2
@@ -149,7 +149,7 @@ void test_diamond_structure() {
 // Test 6: Nested Implications
 void test_nested_implications() {
     std::cout << "\nRunning Nested Implications test...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(6);
     
     // (x0 => x1) => (x2 => x3) => (x4 => x5)
@@ -171,7 +171,7 @@ void test_nested_implications() {
 // Test 7: Multiple Unit Clauses with Conflict
 void test_multiple_units() {
     std::cout << "\nRunning Multiple Units test...\n";
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(5);
     
     // Add several unit clauses
@@ -193,7 +193,7 @@ void test_multiple_units() {
 // Test 8: Sliding Window Constraints
 void test_sliding_window() {
     std::cout << "\nRunning Sliding Window test...\n";
-    CDCLSolver solver;
+    Solver solver;
     const int n = 6;
     const int window = 3;
     solver.set_num_variables(n);

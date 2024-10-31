@@ -1,4 +1,4 @@
-#include "xor_smc/CDCLSolver.hpp"
+#include "xor_smc/Solver.hpp"
 #include <iostream>
 #include <vector>
 
@@ -14,7 +14,7 @@ void test_pigeon_hole() {
     // Should be UNSAT as it's impossible
     std::cout << "Testing Pigeonhole Principle (3 pigeons, 2 holes)\n";
     
-    CDCLSolver solver;
+    Solver solver;
     solver.set_num_variables(6);  // p1h1, p1h2, p2h1, p2h2, p3h1, p3h2
     
     // Each pigeon must be in at least one hole
@@ -41,7 +41,7 @@ void test_graph_coloring() {
     // Example: Complete graph with 4 vertices (should be UNSAT with 2 colors)
     std::cout << "Testing Graph Coloring (K4 with 2 colors)\n";
     
-    CDCLSolver solver;
+    Solver solver;
     // Variables: v1c1, v1c2, v2c1, v2c2, v3c1, v3c2, v4c1, v4c2
     solver.set_num_variables(8);
     
@@ -89,7 +89,7 @@ void test_sudoku_constraints() {
     // Just testing a small portion of Sudoku constraints (2x2 grid)
     std::cout << "Testing Small Sudoku Constraints\n";
     
-    CDCLSolver solver;
+    Solver solver;
     // Variables: cell_ij_v (i=row, j=col, v=value)
     // For 2x2, we need 16 variables (4 cells, 4 possible values each)
     solver.set_num_variables(16);
@@ -120,7 +120,7 @@ void test_sudoku_constraints() {
 void test_queens(int n = 4) {
     std::cout << "Testing " << n << "-Queens Problem\n";
     
-    CDCLSolver solver;
+    Solver solver;
     // Variables: qrc (queen at row r, column c)
     solver.set_num_variables(n * n);
     
@@ -184,7 +184,7 @@ void test_hard_unsat() {
     std::cout << "\nRunning test_hard_unsat (Pure Pigeonhole)\n";
     
     const int N = 8;  // N holes for N+1 pigeons
-    CDCLSolver solver;
+    Solver solver;
     
     // Just N+1 * N variables for pigeons in holes
     solver.set_num_variables((N + 1) * N);
@@ -193,7 +193,6 @@ void test_hard_unsat() {
         return pigeon * N + hole;
     };
     
-    // 1. Each pigeon must be in at least one hole
     for (int p = 0; p < N + 1; p++) {
         std::vector<Literal> clause;
         for (int h = 0; h < N; h++) {
@@ -202,7 +201,6 @@ void test_hard_unsat() {
         solver.add_clause(clause);
     }
     
-    // 2. No two pigeons in same hole
     for (int h = 0; h < N; h++) {
         for (int p1 = 0; p1 < N + 1; p1++) {
             for (int p2 = p1 + 1; p2 < N + 1; p2++) {

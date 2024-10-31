@@ -20,7 +20,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 add_library(xor_smc
     src/Solver.cpp
     src/Formula.cpp
-    src/CDCLSolver.cpp
 )
 
 # Include directories

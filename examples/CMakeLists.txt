@@ -6,3 +6,4 @@ target_link_libraries(complex_test PRIVATE xor_smc)
 
 add_executable(more_tests more_tests.cpp)
 target_link_libraries(more_tests PRIVATE xor_smc)
+
