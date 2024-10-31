@@ -1,7 +1,9 @@
 #pragma once
-#include "CDCLSolver.hpp"
+#include "xor_smc/CDCLSolver.hpp"
 #include <vector>
 #include <random>
+#include <memory>
+#include <iostream>
 
 namespace xor_smc {
 
@@ -26,14 +28,16 @@ private:
                        const std::vector<std::vector<Literal>>& formula,
                        uint32_t num_vars,
                        uint32_t num_xors);
-                       
-    // Helper methods
-    uint32_t compute_T(uint32_t n, uint32_t k) const;
+
+    // Helper functions
+    uint32_t count_actual_solutions(
+        const std::vector<std::vector<Literal>>& formula, 
+        uint32_t num_vars) const;
     
-    // Member variables - order matters for initialization
-    std::mt19937 rng_;      // Random number generator
-    double eta_;            // Error probability bound
-    bool debug_;            // Debug output control
+    // Member variables
+    std::mt19937 rng_;
+    double eta_;
+    bool debug_;
 };
 
 }
