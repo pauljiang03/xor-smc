@@ -180,10 +180,50 @@ void test_queens(int n = 4) {
     }
 }
 
+void test_hard_unsat() {
+    std::cout << "\nRunning test_hard_unsat (Pure Pigeonhole)\n";
+    
+    const int N = 8;  // N holes for N+1 pigeons
+    CDCLSolver solver;
+    
+    // Just N+1 * N variables for pigeons in holes
+    solver.set_num_variables((N + 1) * N);
+    
+    auto pigeon_var = [&](int pigeon, int hole) -> uint32_t {
+        return pigeon * N + hole;
+    };
+    
+    // 1. Each pigeon must be in at least one hole
+    for (int p = 0; p < N + 1; p++) {
+        std::vector<Literal> clause;
+        for (int h = 0; h < N; h++) {
+            clause.push_back(Literal(pigeon_var(p, h), true));
+        }
+        solver.add_clause(clause);
+    }
+    
+    // 2. No two pigeons in same hole
+    for (int h = 0; h < N; h++) {
+        for (int p1 = 0; p1 < N + 1; p1++) {
+            for (int p2 = p1 + 1; p2 < N + 1; p2++) {
+                solver.add_clause({
+                    Literal(pigeon_var(p1, h), false),
+                    Literal(pigeon_var(p2, h), false)
+                });
+            }
+        }
+    }
+    
+    bool result = solver.solve();
+    std::cout << "Hard UNSAT Result: " << (result ? "SAT" : "UNSAT") << "\n";
+    assert(!result); // Should definitely be UNSAT
+}
+
 int main() {
     test_queens();
     test_pigeon_hole();
     test_graph_coloring();
     test_sudoku_constraints();
+    test_hard_unsat();
     return 0;
 }

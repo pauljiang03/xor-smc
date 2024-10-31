@@ -156,17 +156,17 @@ complex_test/fast:
 .PHONY : complex_test/fast
 
 #=============================================================================
-# Target rules for targets named smc_test
+# Target rules for targets named more_tests
 
 # Build rule for target.
-smc_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 smc_test
-.PHONY : smc_test
+more_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 more_tests
+.PHONY : more_tests
 
 # fast build rule for target.
-smc_test/fast:
-	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/build
-.PHONY : smc_test/fast
+more_tests/fast:
+	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/build
+.PHONY : more_tests/fast
 
 src/CDCLSolver.o: src/CDCLSolver.cpp.o
 .PHONY : src/CDCLSolver.o
@@ -249,8 +249,8 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... complex_test"
+	@echo "... more_tests"
 	@echo "... simple_example"
-	@echo "... smc_test"
 	@echo "... xor_smc"
 	@echo "... src/CDCLSolver.o"
 	@echo "... src/CDCLSolver.i"

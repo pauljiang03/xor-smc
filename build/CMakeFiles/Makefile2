@@ -82,7 +82,7 @@ clean: examples/clean
 # Recursive "all" directory target.
 examples/all: examples/CMakeFiles/simple_example.dir/all
 examples/all: examples/CMakeFiles/complex_test.dir/all
-examples/all: examples/CMakeFiles/smc_test.dir/all
+examples/all: examples/CMakeFiles/more_tests.dir/all
 .PHONY : examples/all
 
 # Recursive "preinstall" directory target.
@@ -92,7 +92,7 @@ examples/preinstall:
 # Recursive "clean" directory target.
 examples/clean: examples/CMakeFiles/simple_example.dir/clean
 examples/clean: examples/CMakeFiles/complex_test.dir/clean
-examples/clean: examples/CMakeFiles/smc_test.dir/clean
+examples/clean: examples/CMakeFiles/more_tests.dir/clean
 .PHONY : examples/clean
 
 #=============================================================================
@@ -128,7 +128,7 @@ CMakeFiles/xor_smc.dir/clean:
 examples/CMakeFiles/simple_example.dir/all: CMakeFiles/xor_smc.dir/all
 	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/depend
 	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/paul/documents/xor-smc/build/CMakeFiles --progress-num=3,4 "Built target simple_example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/paul/documents/xor-smc/build/CMakeFiles --progress-num=5,6 "Built target simple_example"
 .PHONY : examples/CMakeFiles/simple_example.dir/all
 
 # Build rule for subdir invocation for target.
@@ -174,30 +174,30 @@ examples/CMakeFiles/complex_test.dir/clean:
 .PHONY : examples/CMakeFiles/complex_test.dir/clean
 
 #=============================================================================
-# Target rules for target examples/CMakeFiles/smc_test.dir
+# Target rules for target examples/CMakeFiles/more_tests.dir
 
 # All Build rule for target.
-examples/CMakeFiles/smc_test.dir/all: CMakeFiles/xor_smc.dir/all
-	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/depend
-	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/paul/documents/xor-smc/build/CMakeFiles --progress-num=5,6 "Built target smc_test"
-.PHONY : examples/CMakeFiles/smc_test.dir/all
+examples/CMakeFiles/more_tests.dir/all: CMakeFiles/xor_smc.dir/all
+	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/paul/documents/xor-smc/build/CMakeFiles --progress-num=3,4 "Built target more_tests"
+.PHONY : examples/CMakeFiles/more_tests.dir/all
 
 # Build rule for subdir invocation for target.
-examples/CMakeFiles/smc_test.dir/rule: cmake_check_build_system
+examples/CMakeFiles/more_tests.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/paul/documents/xor-smc/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/smc_test.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/more_tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/paul/documents/xor-smc/build/CMakeFiles 0
-.PHONY : examples/CMakeFiles/smc_test.dir/rule
+.PHONY : examples/CMakeFiles/more_tests.dir/rule
 
 # Convenience name for target.
-smc_test: examples/CMakeFiles/smc_test.dir/rule
-.PHONY : smc_test
+more_tests: examples/CMakeFiles/more_tests.dir/rule
+.PHONY : more_tests
 
 # clean rule for target.
-examples/CMakeFiles/smc_test.dir/clean:
-	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/clean
-.PHONY : examples/CMakeFiles/smc_test.dir/clean
+examples/CMakeFiles/more_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/clean
+.PHONY : examples/CMakeFiles/more_tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

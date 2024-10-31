@@ -1,2 +1,2 @@
-# Empty dependencies file for smc_test.
+# Empty dependencies file for more_tests.
 # This may be replaced when dependencies are built.

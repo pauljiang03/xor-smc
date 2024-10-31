@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/paul/documents/xor-smc/examples/smc_test.cpp" "examples/CMakeFiles/smc_test.dir/smc_test.cpp.o" "gcc" "examples/CMakeFiles/smc_test.dir/smc_test.cpp.o.d"
+  "/Users/paul/documents/xor-smc/examples/more_tests.cpp" "examples/CMakeFiles/more_tests.dir/more_tests.cpp.o" "gcc" "examples/CMakeFiles/more_tests.dir/more_tests.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

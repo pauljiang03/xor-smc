@@ -145,18 +145,18 @@ complex_test/fast:
 .PHONY : complex_test/fast
 
 # Convenience name for target.
-examples/CMakeFiles/smc_test.dir/rule:
-	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/smc_test.dir/rule
-.PHONY : examples/CMakeFiles/smc_test.dir/rule
+examples/CMakeFiles/more_tests.dir/rule:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/more_tests.dir/rule
+.PHONY : examples/CMakeFiles/more_tests.dir/rule
 
 # Convenience name for target.
-smc_test: examples/CMakeFiles/smc_test.dir/rule
-.PHONY : smc_test
+more_tests: examples/CMakeFiles/more_tests.dir/rule
+.PHONY : more_tests
 
 # fast build rule for target.
-smc_test/fast:
-	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/build
-.PHONY : smc_test/fast
+more_tests/fast:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/build
+.PHONY : more_tests/fast
 
 complex_test.o: complex_test.cpp.o
 .PHONY : complex_test.o
@@ -182,6 +182,30 @@ complex_test.cpp.s:
 	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/complex_test.dir/build.make examples/CMakeFiles/complex_test.dir/complex_test.cpp.s
 .PHONY : complex_test.cpp.s
 
+more_tests.o: more_tests.cpp.o
+.PHONY : more_tests.o
+
+# target to build an object file
+more_tests.cpp.o:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/more_tests.cpp.o
+.PHONY : more_tests.cpp.o
+
+more_tests.i: more_tests.cpp.i
+.PHONY : more_tests.i
+
+# target to preprocess a source file
+more_tests.cpp.i:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/more_tests.cpp.i
+.PHONY : more_tests.cpp.i
+
+more_tests.s: more_tests.cpp.s
+.PHONY : more_tests.s
+
+# target to generate assembly for a file
+more_tests.cpp.s:
+	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/more_tests.dir/build.make examples/CMakeFiles/more_tests.dir/more_tests.cpp.s
+.PHONY : more_tests.cpp.s
+
 simple_example.o: simple_example.cpp.o
 .PHONY : simple_example.o
 
@@ -206,30 +230,6 @@ simple_example.cpp.s:
 	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/simple_example.dir/build.make examples/CMakeFiles/simple_example.dir/simple_example.cpp.s
 .PHONY : simple_example.cpp.s
 
-smc_test.o: smc_test.cpp.o
-.PHONY : smc_test.o
-
-# target to build an object file
-smc_test.cpp.o:
-	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.o
-.PHONY : smc_test.cpp.o
-
-smc_test.i: smc_test.cpp.i
-.PHONY : smc_test.i
-
-# target to preprocess a source file
-smc_test.cpp.i:
-	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.i
-.PHONY : smc_test.cpp.i
-
-smc_test.s: smc_test.cpp.s
-.PHONY : smc_test.s
-
-# target to generate assembly for a file
-smc_test.cpp.s:
-	cd /Users/paul/documents/xor-smc/build && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/smc_test.dir/build.make examples/CMakeFiles/smc_test.dir/smc_test.cpp.s
-.PHONY : smc_test.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -239,17 +239,17 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... complex_test"
+	@echo "... more_tests"
 	@echo "... simple_example"
-	@echo "... smc_test"
 	@echo "... complex_test.o"
 	@echo "... complex_test.i"
 	@echo "... complex_test.s"
+	@echo "... more_tests.o"
+	@echo "... more_tests.i"
+	@echo "... more_tests.s"
 	@echo "... simple_example.o"
 	@echo "... simple_example.i"
 	@echo "... simple_example.s"
-	@echo "... smc_test.o"
-	@echo "... smc_test.i"
-	@echo "... smc_test.s"
 .PHONY : help
 
 
