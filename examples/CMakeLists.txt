@@ -8,6 +8,6 @@ add_executable(more_tests more_tests.cpp)
 target_link_libraries(more_tests PRIVATE xor_smc)
 
 
-add_executable(disaster_plan disaster_plan.cpp)
-target_link_libraries(disaster_plan PRIVATE xor_smc)
+add_executable(test_count test_count.cpp)
+target_link_libraries(test_count PRIVATE xor_smc)
 
