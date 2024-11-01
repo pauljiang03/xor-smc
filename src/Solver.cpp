@@ -133,7 +133,7 @@ bool Solver::propagate() {
             const auto& other_lit = clause->literals[other_idx];
             uint32_t other_var = other_lit.var_id();
             
-            // If other watch is true, clause is satisfied
+            // If other watch is true, clause satisfied
             if (assignments_[other_var].level != -1 && 
                 assignments_[other_var].value == other_lit.is_positive()) {
                 i++;
@@ -321,7 +321,6 @@ void Solver::convert_xor_to_cnf(
     size_t n = xor_lits.size();
     if (n == 0) return;
     
-    // Generate clauses for all assignments that give even parity
     // (XOR is 1 when odd number of variables are 1)
     for(size_t mask = 0; mask < (1u << n); mask++) {
         // Count number of 1s in this assignment
@@ -361,10 +360,9 @@ bool Solver::solve_smc(
                   << q << " XORs\n";
         
         for(int trial = 0; trial < NUM_TRIALS; trial++) {
-            Solver test_solver;  // Fresh solver for each trial
+            Solver test_solver;  
             test_solver.set_num_variables(num_variables());
             
-            // Add all original clauses
             for(const auto& clause : clauses_) {
                 test_solver.add_clause(clause->literals);
             }
@@ -418,7 +416,7 @@ bool Solver::solve_smc(
 std::vector<bool> Solver::get_model() const {
     std::vector<bool> model(num_variables());
     for (uint32_t i = 0; i < num_variables(); i++) {
-        assert(assignments_[i].level != -1);  // All variables should be assigned
+        assert(assignments_[i].level != -1);  
         model[i] = assignments_[i].value;
     }
     return model;
@@ -462,12 +460,12 @@ void Solver::print_assignment() const {
 
 bool Solver::get_value(uint32_t var_id) const {
     assert(var_id < assignments_.size());
-    assert(assignments_[var_id].level != -1);  // Variable must be assigned
+    assert(assignments_[var_id].level != -1);  
     return assignments_[var_id].value;
 }
 
 void Solver::add_unit_clause(const Literal& lit) {
-    add_clause({lit});  // Convert single literal to clause
+    add_clause({lit});  
 }
 
 }

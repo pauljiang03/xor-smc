@@ -8,7 +8,6 @@
 using namespace xor_smc;
 using namespace std::chrono;
 
-// Helper to print test results
 void print_test_result(const std::string& test_name, bool success) {
     std::cout << "Test " << test_name << ": " << (success ? "PASSED" : "FAILED") << "\n";
 }
@@ -56,7 +55,6 @@ void test_conflict_and_backtrack() {
     Solver solver;
     solver.set_num_variables(3);
     
-    // Create a simple conflict
     solver.add_clause({Literal(0, true), Literal(1, true)});   // x0 ∨ x1
     solver.add_clause({Literal(0, false), Literal(2, true)});  // ¬x0 ∨ x2
     solver.add_clause({Literal(1, false), Literal(2, false)}); // ¬x1 ∨ ¬x2
@@ -73,7 +71,6 @@ void test_clause_learning() {
     Solver solver;
     solver.set_num_variables(4);
     
-    // Create a situation where learning is beneficial
     solver.add_clause({Literal(0, true), Literal(1, true)});   // x0 ∨ x1
     solver.add_clause({Literal(1, false), Literal(2, true)});  // ¬x1 ∨ x2
     solver.add_clause({Literal(2, false), Literal(3, false)}); // ¬x2 ∨ ¬x3
@@ -91,7 +88,6 @@ void test_pure_sat() {
     Solver solver;
     solver.set_num_variables(3);
     
-    // Simple satisfiable formula
     solver.add_clause({Literal(0, true), Literal(1, true)});   // x0 ∨ x1
     solver.add_clause({Literal(1, false), Literal(2, true)});  // ¬x1 ∨ x2
     solver.add_clause({Literal(0, false), Literal(2, true)});  // ¬x0 ∨ x2
@@ -109,7 +105,6 @@ void test_pure_unsat() {
     Solver solver;
     solver.set_num_variables(2);
     
-    // Simple unsatisfiable formula
     solver.add_clause({Literal(0, true)});   // x0
     solver.add_clause({Literal(1, true)});   // x1
     solver.add_clause({Literal(0, false)});  // ¬x0
@@ -129,7 +124,6 @@ void test_small_php() {
     const int pigeons = 3;
     solver.set_num_variables(pigeons * holes);
     
-    // Each pigeon must go somewhere
     for (int p = 0; p < pigeons; p++) {
         solver.add_clause({
             Literal(p * holes + 0, true),
@@ -137,7 +131,6 @@ void test_small_php() {
         });
     }
     
-    // No two pigeons in same hole
     for (int h = 0; h < holes; h++) {
         for (int p1 = 0; p1 < pigeons; p1++) {
             for (int p2 = p1 + 1; p2 < pigeons; p2++) {
@@ -172,7 +165,6 @@ void test_implication_chain() {
     bool result = solver.solve();
     assert(result);
     
-    // Verify all variables got propagated to true
     for (int i = 0; i < n; i++) {
         assert(solver.get_value(i) == true);
     }
@@ -186,7 +178,6 @@ void test_non_chrono_backtrack() {
     Solver solver;
     solver.set_num_variables(5);
     
-    // Create a situation requiring non-chronological backtracking
     solver.add_clause({Literal(0, true), Literal(1, true)});   // x0 ∨ x1
     solver.add_clause({Literal(1, false), Literal(2, true)});  // ¬x1 ∨ x2
     solver.add_clause({Literal(2, false), Literal(3, false)}); // ¬x2 ∨ ¬x3
@@ -204,13 +195,12 @@ void test_random_3sat() {
     std::cout << "\nTesting random 3-SAT...\n";
     Solver solver;
     
-    const int n = 20;  // variables
-    const int m = 85;  // clauses (around 4.25 * n for phase transition)
+    const int n = 20;  
+    const int m = 85;  
     
     solver.set_num_variables(n);
     
-    // Generate random 3-SAT formula
-    srand(42);  // Fixed seed for reproducibility
+    srand(42);  
     for (int i = 0; i < m; i++) {
         std::vector<Literal> clause;
         for (int j = 0; j < 3; j++) {
@@ -222,10 +212,6 @@ void test_random_3sat() {
     }
     
     bool result = solver.solve();
-    if (result) {
-        // Verify solution
-        // Would need access to clauses to verify
-    }
     
     print_test_result("Random 3-SAT", true);
 }
