@@ -1,12 +1,15 @@
 #include "xor_smc/Solver.hpp"
+#include <iostream>
 #include <cassert>
 #include <queue>
 #include <unordered_set>
 #include <algorithm>
+#include <cmath>
+#include <random>
 
 namespace xor_smc {
 
-Solver::Solver() : decision_level_(0) {
+Solver::Solver() : decision_level_(0), rng_(std::random_device{}()) {
     std::cout << "Creating Solver...\n";
 }
 
@@ -45,10 +48,6 @@ void Solver::add_clause(const std::vector<Literal>& literals) {
         return;
     }
 
-    //std::cout << "Adding clause: ";
-    //print_clause(std::make_shared<Clause>(literals));
-    //std::cout << "\n";
-
     auto clause = std::make_shared<Clause>(literals);
     
     // For unit clauses, try to assign immediately
@@ -72,6 +71,11 @@ void Solver::add_clause(const std::vector<Literal>& literals) {
     clauses_.push_back(clause);
 }
 
+void Solver::add_unit_clause(const Literal& lit) {
+    std::vector<Literal> clause = {lit};
+    add_clause(clause);
+}
+
 void Solver::attach_watch(const std::shared_ptr<Clause>& clause, size_t watch_idx) {
     const auto& lit = clause->literals[watch_idx];
     uint32_t watch_list = lit.var_id() * 2 + !lit.is_positive();
@@ -90,10 +94,6 @@ void Solver::detach_watch(const std::shared_ptr<Clause>& clause, size_t watch_id
 }
 
 bool Solver::update_watches(const std::shared_ptr<Clause>& clause, const Literal& false_lit) {
-    //std::cout << "Updating watches for clause: ";
-    //print_clause(clause);
-    //std::cout << "\n";
-    
     // Find the false watch index
     size_t false_idx = clause->watched[0];
     if (clause->literals[clause->watched[1]].var_id() == false_lit.var_id()) {
@@ -115,18 +115,14 @@ bool Solver::update_watches(const std::shared_ptr<Clause>& clause, const Literal
             clause->watched[false_idx == clause->watched[0] ? 0 : 1] = i;
             attach_watch(clause, i);
             
-            //std::cout << "Found new watch: x" << var << "\n";
             return true;
         }
     }
     
-    //std::cout << "No new watch found\n";
     return false;  // No new watch found
 }
 
 bool Solver::assign(uint32_t var, bool value, int level, const std::shared_ptr<Clause>& reason) {
-    //std::cout << "Assigning x" << var << " = " << value << " @ level " << level << "\n";
-    
     assignments_[var] = Assignment{level, value, reason};
     trail_.push_back(var);
     propagation_queue_.push_back(var);
@@ -144,8 +140,6 @@ bool Solver::propagate() {
         
         bool value = assignments_[var].value;
         uint32_t watch_idx = var * 2 + value;  // Watch list for false literal
-        
-        //std::cout << "Propagating x" << var << " = " << value << "\n";
         
         // Check all clauses watching this literal's negation
         auto& watch_list = watches_[watch_idx];
@@ -185,9 +179,6 @@ bool Solver::propagate() {
             }
             
             // Conflict
-            //std::cout << "Conflict found in clause: ";
-            //print_clause(clause);
-            //std::cout << "\n";
             conflict_clause_ = clause;
             return false;
         }
@@ -196,9 +187,8 @@ bool Solver::propagate() {
     return true;
 }
 
-std::shared_ptr<Solver::Clause> Solver::analyze_conflict(const std::shared_ptr<Clause>& conflict) {
-    //std::cout << "Analyzing conflict\n";
-    
+std::shared_ptr<Solver::Clause> Solver::analyze_conflict(
+    const std::shared_ptr<Clause>& conflict) {
     std::vector<Literal> learnt_literals;
     std::unordered_set<uint32_t> seen_vars;
     int counter = 0;
@@ -248,11 +238,10 @@ std::shared_ptr<Solver::Clause> Solver::analyze_conflict(const std::shared_ptr<C
     // Construct learnt clause
     for (uint32_t var : seen_vars) {
         learnt_literals.push_back(
-            Literal(var, !assignments_[var].value)  // Note: Negated value
+            Literal(var, !assignments_[var].value)
         );
     }
     
-    // Create and return the learnt clause
     return std::make_shared<Clause>(learnt_literals);
 }
 
@@ -274,8 +263,6 @@ int Solver::compute_backtrack_level(const std::shared_ptr<Clause>& learnt_clause
 }
 
 void Solver::backtrack(int level) {
-    //std::cout << "Backtracking to level " << level << "\n";
-    
     while (!trail_.empty() && assignments_[trail_.back()].level > level) {
         uint32_t var = trail_.back();
         unassign(var);
@@ -324,12 +311,10 @@ bool Solver::solve() {
         
         // Make decision
         decision_level_++;
-        //std::cout << "\nDecision level " << decision_level_ 
-                  //<< ": trying x" << next_var << " = true\n";
-                  
+        
         if (!assign(next_var, true, decision_level_, nullptr) || 
             !propagate()) {
-                
+            
             // Analyze conflict and learn new clause
             auto learnt_clause = analyze_conflict(conflict_clause_);
             
@@ -341,11 +326,6 @@ bool Solver::solve() {
             // Add learned clause and backtrack
             int backtrack_level = compute_backtrack_level(learnt_clause);
             backtrack(backtrack_level);
-            
-            // Add learned clause to clause database
-            //std::cout << "Learned clause: ";
-            //print_clause(learnt_clause);
-            //std::cout << "\n";
             
             clauses_.push_back(learnt_clause);
             attach_watch(learnt_clause, 0);
@@ -365,9 +345,208 @@ bool Solver::solve() {
     }
 }
 
+// SMC-specific functions
+
+std::vector<Literal> Solver::generate_xor_constraint(double density) {
+    std::vector<Literal> xor_lits;
+    std::bernoulli_distribution d(density);
+    
+    // Add each variable with probability density
+    for (uint32_t var = 0; var < num_variables(); var++) {
+        if (d(rng_)) {
+            xor_lits.push_back(Literal(var, true));
+        }
+    }
+    
+    // Add random parity bit
+    if (d(rng_)) {
+        xor_lits.push_back(Literal(num_variables(), true));
+    }
+    
+    return xor_lits;
+}
+
+
+void Solver::convert_xor_to_cnf(
+    const std::vector<Literal>& xor_lits, 
+    std::vector<std::vector<Literal>>& cnf_clauses) {
+    
+    size_t n = xor_lits.size();
+    if (n == 0) return;
+    
+    // For each possible assignment to variables
+    for (size_t i = 0; i < (1u << n); i++) {
+        int ones = __builtin_popcount(i);
+        
+        // If this assignment violates XOR (even number of 1s)
+        // add clause to forbid it
+        if (ones % 2 == 0) {
+            std::vector<Literal> clause;
+            for (size_t j = 0; j < n; j++) {
+                bool is_one = (i & (1 << j));
+                // Add literal that would make this assignment false
+                clause.push_back(Literal(
+                    xor_lits[j].var_id(),
+                    is_one != xor_lits[j].is_positive()
+                ));
+            }
+            cnf_clauses.push_back(clause);
+        }
+    }
+}
+
+void Solver::add_xor_clause(const std::vector<Literal>& literals) {
+    std::vector<std::vector<Literal>> cnf_clauses;
+    convert_xor_to_cnf(literals, cnf_clauses);
+    for (const auto& clause : cnf_clauses) {
+        add_clause(clause);
+    }
+}
+
+
+std::vector<bool> Solver::get_model() const {
+    std::vector<bool> model(num_variables());
+    for (uint32_t i = 0; i < num_variables(); i++) {
+        model[i] = get_value(i);
+    }
+    return model;
+}
+
+void Solver::add_blocking_clause(const std::vector<bool>& model) {
+    std::vector<Literal> blocking;
+    for (uint32_t i = 0; i < model.size(); i++) {
+        blocking.push_back(Literal(i, !model[i]));
+    }
+    add_clause(blocking);
+}
+
 bool Solver::get_value(uint32_t var_id) const {
     assert(var_id < assignments_.size());
+    assert(assignments_[var_id].level != -1);  // Variable must be assigned
     return assignments_[var_id].value;
+}
+
+uint32_t Solver::num_variables() const {
+    return assignments_.size();
+}
+
+uint32_t Solver::num_clauses() const {
+    return clauses_.size();
+}
+
+std::vector<Literal> Solver::generate_xor_constraint_over_vars(
+    const std::vector<uint32_t>& vars,
+    double density) {
+    
+    std::vector<Literal> xor_constraint;
+    bool parity = std::bernoulli_distribution(0.5)(rng_); // Random parity bit
+    
+    // Select each variable with probability 1/2
+    for (uint32_t var : vars) {
+        if (std::bernoulli_distribution(0.5)(rng_)) {
+            // Include variable with random polarity
+            xor_constraint.push_back(Literal(var, true));
+        }
+    }
+    
+    // If parity bit is 1, negate the entire constraint
+    if (parity) {
+        // Add a true constant to force odd parity
+        if (!vars.empty()) {
+            xor_constraint.push_back(Literal(vars[0], true));  
+        }
+    }
+    
+    return xor_constraint;
+}
+
+void Solver::add_xor_clause_over_vars(const std::vector<uint32_t>& vars) {
+    auto xor_constraint = generate_xor_constraint_over_vars(vars);
+    add_xor_clause(xor_constraint);
+}
+
+bool Solver::solve_smc(
+    const std::vector<uint32_t>& thresholds,
+    const std::vector<std::vector<uint32_t>>& counting_variables,
+    const std::vector<std::vector<uint32_t>>& fixed_variables,
+    int num_xor_tries,
+    double confidence) {
+    
+    const int T = 10;  // Number of trials
+    const int c = 1;  // Constant from paper
+    
+    for (size_t i = 0; i < thresholds.size(); i++) {
+        int successes = 0;
+        
+        int q = (thresholds[i] <= 1) ? 0 : std::ceil(std::log2(thresholds[i]));
+        std::cout << "\nTesting threshold " << thresholds[i] << " using " 
+                  << q << " XORs\n";
+        
+        for (int t = 0; t < T; t++) {
+            auto saved_clauses = clauses_;
+            auto saved_assignment = assignments_;
+            
+            // Fix required variables
+            for (uint32_t var : fixed_variables[i]) {
+                if (saved_assignment[var].level != -1) {
+                    add_unit_clause(Literal(var, saved_assignment[var].value));
+                }
+            }
+            
+            // Build XOR constraints that enforce parity
+            for (int j = 0; j < q; j++) {
+                // Select variables with prob 1/2
+                std::vector<Literal> vars_in_xor;
+                for (uint32_t var : counting_variables[i]) {
+                    if (std::bernoulli_distribution(0.5)(rng_)) {
+                        vars_in_xor.push_back(Literal(var, true));
+                    }
+                }
+                
+                // Random parity bit
+                bool parity = std::bernoulli_distribution(0.5)(rng_);
+                
+                // Skip if no variables selected
+                if (vars_in_xor.empty()) {
+                    continue;
+                }
+                
+                // Generate all assignments with wrong parity
+                for (size_t mask = 0; mask < (1u << vars_in_xor.size()); mask++) {
+                    int ones = __builtin_popcount(mask);
+                    if ((ones % 2) != parity) {
+                        // This assignment violates parity - add clause to forbid it
+                        std::vector<Literal> clause;
+                        for (size_t k = 0; k < vars_in_xor.size(); k++) {
+                            bool val = (mask >> k) & 1;
+                            clause.push_back(Literal(vars_in_xor[k].var_id(), !val));
+                        }
+                        add_clause(clause);
+                    }
+                }
+            }
+            
+            bool is_sat = solve();
+            
+            if (is_sat) {
+                successes++;
+                std::cout << "Trial " << t << ": SAT\n";
+            } else {
+                std::cout << "Trial " << t << ": UNSAT\n";
+            }
+            
+            clauses_ = saved_clauses;
+            assignments_ = saved_assignment;
+        }
+        
+        std::cout << "Had " << successes << " successes out of " << T << " trials\n";
+        
+        if (successes <= T/2) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 }
